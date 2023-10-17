@@ -65,6 +65,11 @@ void decode_base64(char *input, char *output)
 
     while (input[i] != '\0')
     {
+        if (input[i] == '=')
+        {
+            break; // Stop decoding when a padding character is encountered.
+        }
+
         for (int k = 0; k < 4; k++)
         {
             if (input[i] != '=')
@@ -84,14 +89,7 @@ void decode_base64(char *input, char *output)
 
         for (int k = 0; k < 3; k++)
         {
-            if (input[i - 1] != '=')
-            {
-                output[j++] = output_buffer[k];
-            }
-            else
-            {
-                break;
-            }
+            output[j++] = output_buffer[k];
         }
     }
 
